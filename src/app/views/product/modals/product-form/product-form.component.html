@@ -1,0 +1,29 @@
+<h2 mat-dialog-title align="center">{{actionType}} Produto</h2>
+<mat-dialog-content class="mat-typography">
+    <form class="actionForm" [formGroup]="formAction">
+        <mat-form-field appearance="outline" class="input" >
+            <mat-label>Código</mat-label>
+            <input matInput placeholder="Código" formControlName="code" maxlength="8">
+            @if (formAction.get('code')?.hasError('existProduct')) {
+                <mat-error>Já existe um produto com esse código</mat-error>
+              }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="input">
+            <mat-label>Nome</mat-label>
+            <input matInput placeholder="Nome" formControlName="name" maxlength="30">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="input">
+            <mat-label>Categoria</mat-label>
+            <mat-select formControlName="category">
+                @for (category of categories; track category) {
+                <mat-option [value]="category.value">{{category.viewValue}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </form>
+ 
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="true" [disabled]="formAction.invalid" (click)="productAction()" >{{actionType}}</button>
+</mat-dialog-actions>

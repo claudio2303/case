@@ -1,0 +1,46 @@
+<form class="search-form" [formGroup]="searchForm">
+    <h2>Filtrar por</h2>
+    <mat-form-field appearance="outline" class="input">
+        <mat-label>Nome</mat-label>
+        <input matInput placeholder="Nome" formControlName="name">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="input">
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="category">
+            @for (category of categories; track category) {
+            <mat-option [value]="category.value">{{category.viewValue}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+</form>
+@if ((productService.getProducts() |caseFilter:  searchForm.value).length > 0) {
+<div class="d-flex">
+
+    @for (item of productService.getProducts() | caseFilter: searchForm.value; track $index) {
+    <mat-card class="card">
+        <mat-card-content class="content">
+            <span class="initial">
+                {{item.name | initials}}
+            </span>
+            <h3 class="title"><strong> {{item.name}}</strong></h3>
+            <h3 class="category"><i>({{item.category}})</i></h3>
+            <span class="code">Código - {{item.code}}</span><br>
+            <button class="delete" mat-icon-button color="primary"
+                (click)="deleteConfirmation(item.code)"><mat-icon>delete</mat-icon></button>
+            <button class="button" mat-flat-button color="primary" (click)="openDialog(false, item)">Editar</button>
+
+        </mat-card-content>
+    </mat-card>
+    }
+</div>
+} @else {
+    <div class="not-found">
+        <h1>Nenhum produto encontrado!</h1>
+        <p>Adicione um novo produto!</p>
+    </div>
+}
+
+<button mat-fab color="primary" class="add" (click)="openDialog(true)">
+    <mat-icon>add</mat-icon>
+</button>

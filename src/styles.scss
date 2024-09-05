@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+$sb-track-color: #ffffff;
+$sb-thumb-color: #3c3c3c;
+$sb-size: 6px;
+
+html,
+body {
+    height: 100%;
+    background-color: #f8f8fa;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    
+}
+.container {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+body::-webkit-scrollbar {
+    width: $sb-size;
+}
+
+body::-webkit-scrollbar-track {
+    background: $sb-track-color;
+    border-radius: 3px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: $sb-thumb-color;
+    border-radius: 3px;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+    body {
+        scrollbar-color: $sb-thumb-color $sb-track-color;
+    }
+}
+
+@media (max-width:641px)  { 
+    .container {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
